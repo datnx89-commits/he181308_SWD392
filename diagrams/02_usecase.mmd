@@ -1,0 +1,32 @@
+---
+config:
+  theme: neutral
+---
+flowchart LR
+    User(["👤 User<br>(HR Staff)"])
+
+    subgraph S["Worker Management System"]
+        UC1(["Add a Worker"])
+        UC2(["Increase Salary"])
+        UC3(["Decrease Salary"])
+        UC4(["Show Adjusted Salary Workers"])
+        UC5(["Quit Program"])
+        V1(["Validate Worker Data<br>(code, age, salary)"])
+        V2(["Check Worker Code Exists"])
+        V3(["Check Amount > 0"])
+        V4(["Save Salary History"])
+    end
+
+    User --- UC1
+    User --- UC2
+    User --- UC3
+    User --- UC4
+    User --- UC5
+
+    UC1 -. «include» .-> V1
+    UC2 -. «include» .-> V2
+    UC2 -. «include» .-> V3
+    UC2 -. «include» .-> V4
+    UC3 -. «include» .-> V2
+    UC3 -. «include» .-> V3
+    UC3 -. «include» .-> V4

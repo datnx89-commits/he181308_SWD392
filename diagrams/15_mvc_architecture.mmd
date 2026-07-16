@@ -1,0 +1,26 @@
+---
+title: "MVC Architecture - Worker Management System"
+config:
+  theme: neutral
+---
+flowchart TD
+    subgraph V["VIEW"]
+        WV["WorkerView<br>(console I/O: menu, prompts, tables)"]
+    end
+
+    subgraph C["CONTROLLER"]
+        WC["WorkerController<br>(routes user choices, handles use cases)"]
+    end
+
+    subgraph M["MODEL"]
+        IM["IWorkerManagement<br>«interface»"]
+        MG["Management<br>(business rules + in-memory DB)"]
+        E["Worker · SalaryHistory · SalaryStatus<br>(entities)"]
+    end
+
+    U(["👤 User"]) <--> WV
+    WC -- "asks for input /<br>sends results to display" --> WV
+    WV -- "user choice,<br>entered data" --> WC
+    WC -- "addWorker / changeSalary /<br>getInfomationSalary" --> IM
+    IM -. "implemented by" .- MG
+    MG --> E

@@ -1,0 +1,16 @@
+---
+title: "Component View"
+config:
+  theme: neutral
+---
+flowchart TD
+    UI["⬜ Console UI<br>WorkerView"]
+    CTRL["⬜ Use Case Coordinator<br>WorkerController"]
+    BIZ["⬜ Business Logic<br>Management<br>(via IWorkerManagement)"]
+    STORE["🗄 In-memory Worker Store<br>Map&lt;String, Worker&gt;"]
+    HIST["🗄 Salary History Store<br>List&lt;SalaryHistory&gt;"]
+
+    CTRL -- "display / read" --> UI
+    CTRL -- "IWorkerManagement" --> BIZ
+    BIZ -- "put / get / containsKey" --> STORE
+    BIZ -- "add / sort by code" --> HIST

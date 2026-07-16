@@ -1,0 +1,17 @@
+---
+title: "Communication Diagram - Add a Worker"
+config:
+  theme: neutral
+---
+flowchart LR
+    U(["👤 User"])
+    V["WorkerView<br>«boundary»"]
+    C["WorkerController<br>«control»"]
+    M["Management<br>«control»"]
+    W["Worker<br>«entity»"]
+
+    U -- "1: select option 1<br>8: see result" --- V
+    V -- "2: choice = 1<br>3: inputWorker()" --- C
+    C -- "4: addWorker(worker)" --- M
+    M -- "5: validateWorker(worker)<br>6: workerDB.put(id, worker)" --- W
+    M -- "7: return true / exception" --- C

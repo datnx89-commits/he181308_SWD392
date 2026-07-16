@@ -1,0 +1,23 @@
+---
+title: "Data Model - Worker & SalaryHistory"
+config:
+  theme: neutral
+---
+erDiagram
+    WORKER ||--o{ SALARY_HISTORY : "has adjustments"
+    WORKER {
+        string id PK "worker code, unique, not null"
+        string name
+        int age "18..50"
+        double salary "> 0"
+        string workLocation
+    }
+    SALARY_HISTORY {
+        string workerId FK "worker code"
+        string workerName
+        double salaryBefore
+        double amount "> 0"
+        string status "UP / DOWN"
+        double salaryAfter "> 0"
+        datetime adjustedAt
+    }

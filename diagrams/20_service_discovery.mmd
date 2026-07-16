@@ -1,0 +1,18 @@
+---
+title: "Service Discovery Pattern"
+config:
+  theme: neutral
+---
+flowchart TD
+    REG["Service Registry<br>(e.g. Eureka / Consul)"]
+    GW["API Gateway<br>(client)"]
+    WS["Worker Service<br>instance 1..n"]
+    SS["Salary Service<br>instance 1..n"]
+    HS["History Service<br>instance 1..n"]
+
+    WS -- "1: register(address)" --> REG
+    SS -- "1: register(address)" --> REG
+    HS -- "1: register(address)" --> REG
+    GW -- "2: lookup('Salary Service')" --> REG
+    REG -- "3: healthy instance address" --> GW
+    GW -- "4: invoke" --> SS

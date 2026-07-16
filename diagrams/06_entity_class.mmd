@@ -1,0 +1,37 @@
+---
+config:
+  theme: neutral
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction LR
+
+class Worker {
+    <<entity>>
+    -String id
+    -String name
+    -int age
+    -double salary
+    -String workLocation
+}
+
+class SalaryHistory {
+    <<entity>>
+    -String workerId
+    -String workerName
+    -double salaryBefore
+    -double amount
+    -SalaryStatus status
+    -double salaryAfter
+    -LocalDateTime adjustedAt
+}
+
+class SalaryStatus {
+    <<enumeration>>
+    INCREASE
+    DECREASE
+}
+
+Worker "1" --> "0..*" SalaryHistory : has adjustments
+SalaryHistory --> SalaryStatus : status

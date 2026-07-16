@@ -1,0 +1,17 @@
+---
+title: "State Machine - Salary Adjustment Session"
+config:
+  theme: neutral
+---
+stateDiagram-v2
+    [*] --> MenuDisplayed
+    MenuDisplayed --> EnteringCode : option 2/3 selected
+    EnteringCode --> EnteringAmount : code entered
+    EnteringAmount --> Validating : amount entered
+    Validating --> Failed : code not found /<br>amount <= 0 /<br>salary after <= 0
+    Validating --> Adjusting : all rules pass
+    Adjusting --> HistorySaved : salary updated
+    HistorySaved --> Succeeded
+    Succeeded --> MenuDisplayed : back to menu
+    Failed --> MenuDisplayed : error shown,<br>back to menu
+    MenuDisplayed --> [*] : option 5 (Quit)

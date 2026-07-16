@@ -1,0 +1,53 @@
+---
+title: "VOPC - Adjust Salary (Increase / Decrease)"
+config:
+  theme: neutral
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction LR
+
+class User {
+    <<actor>>
+}
+
+class SalaryScreen {
+    <<boundary>>
+    +inputCode()
+    +inputAmount()
+    +displayMessage(msg)
+}
+
+class AdjustSalaryController {
+    <<control>>
+    +handleChangeSalary(status)
+}
+
+class SalaryRules {
+    <<control>>
+    +checkCodeExists(code)
+    +checkAmount(amount)
+}
+
+class Worker {
+    <<entity>>
+    -id
+    -salary
+}
+
+class SalaryHistory {
+    <<entity>>
+    -salaryBefore
+    -amount
+    -status
+    -salaryAfter
+    -adjustedAt
+}
+
+User --> SalaryScreen : interacts
+SalaryScreen --> AdjustSalaryController : code, amount
+AdjustSalaryController --> SalaryRules : validate
+SalaryRules --> Worker : looks up
+AdjustSalaryController --> Worker : updates salary
+AdjustSalaryController --> SalaryHistory : creates record

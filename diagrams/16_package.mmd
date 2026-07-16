@@ -1,0 +1,27 @@
+---
+title: "Package Diagram"
+config:
+  theme: neutral
+---
+flowchart TD
+    subgraph src["src/"]
+        MAIN["Main.java<br>(entry point)"]
+        subgraph controller["📦 controller"]
+            WC["WorkerController"]
+        end
+        subgraph view["📦 view"]
+            WV["WorkerView"]
+        end
+        subgraph model["📦 model"]
+            IM["IWorkerManagement"]
+            MG["Management"]
+            W["Worker"]
+            SH["SalaryHistory"]
+            SS["SalaryStatus"]
+        end
+    end
+
+    MAIN --> controller
+    controller --> view
+    controller --> model
+    view --> model

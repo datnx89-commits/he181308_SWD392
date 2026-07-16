@@ -1,0 +1,45 @@
+---
+title: "VOPC - Add a Worker"
+config:
+  theme: neutral
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction LR
+
+class User {
+    <<actor>>
+}
+
+class WorkerFormScreen {
+    <<boundary>>
+    +displayMenu()
+    +inputWorker()
+    +displayMessage(msg)
+}
+
+class AddWorkerController {
+    <<control>>
+    +handleAddWorker()
+}
+
+class WorkerValidation {
+    <<control>>
+    +validateWorker(worker)
+}
+
+class Worker {
+    <<entity>>
+    -id
+    -name
+    -age
+    -salary
+    -workLocation
+}
+
+User --> WorkerFormScreen : interacts
+WorkerFormScreen --> AddWorkerController : choice, worker data
+AddWorkerController --> WorkerValidation : validate
+WorkerValidation --> Worker : reads
+AddWorkerController --> Worker : creates / stores

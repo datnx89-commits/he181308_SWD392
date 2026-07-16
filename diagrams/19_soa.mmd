@@ -1,0 +1,29 @@
+---
+title: "SOA View - Worker Management as Services"
+config:
+  theme: neutral
+---
+flowchart TD
+    CL(["Clients<br>(console / web / mobile HR tools)"])
+    GW["API Gateway"]
+
+    subgraph Services
+        WS["Worker Service<br>(add / query workers)"]
+        SS["Salary Service<br>(increase / decrease salary)"]
+        VS["Validation Service<br>(code, age, salary, amount rules)"]
+        HS["History Service<br>(salary adjustment records)"]
+    end
+
+    DB1[("Worker DB")]
+    DB2[("History DB")]
+
+    CL --> GW
+    GW --> WS
+    GW --> SS
+    GW --> HS
+    WS --> VS
+    SS --> VS
+    WS --> DB1
+    SS --> DB1
+    SS --> HS
+    HS --> DB2

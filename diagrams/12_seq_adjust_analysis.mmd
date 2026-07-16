@@ -1,0 +1,24 @@
+---
+title: "Sequence Diagram (Analysis) - Adjust Salary"
+config:
+  theme: neutral
+---
+sequenceDiagram
+    actor User
+    participant B as SalaryScreen<br>«boundary»
+    participant C as AdjustSalaryController<br>«control»
+    participant W as Worker<br>«entity»
+    participant H as SalaryHistory<br>«entity»
+
+    User->>B: select option 2/3, enter code + amount
+    B->>C: status, code, amount
+    C->>W: find worker by code
+    alt code exists and amount valid
+        C->>W: update salary (+/- amount)
+        C->>H: create history record (UP/DOWN)
+        C-->>B: success
+        B-->>User: "Salary adjusted successfully!"
+    else invalid
+        C-->>B: error message
+        B-->>User: show error
+    end

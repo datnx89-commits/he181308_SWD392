@@ -1,0 +1,14 @@
+---
+config:
+  theme: neutral
+---
+flowchart TD
+    Start([Start]) --> M[System displays main menu]
+    M --> C{User selects option 4}
+    C --> G[System gets salary histories<br>sorted by worker code]
+    G --> V{List is empty?}
+    V -- "Yes" --> E[Show message:<br>no worker has been adjusted]
+    V -- "No" --> T[Display table: code, name,<br>before, amount, status, after, time]
+    E --> M2[Return to main menu]
+    T --> M2
+    M2 --> End([End])

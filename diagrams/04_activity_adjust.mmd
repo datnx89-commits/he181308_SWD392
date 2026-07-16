@@ -1,0 +1,25 @@
+---
+config:
+  theme: neutral
+---
+flowchart TD
+    Start([Start]) --> M[System displays main menu]
+    M --> C{User selects option 2 or 3}
+    C -- "2" --> S1[status = INCREASE]
+    C -- "3" --> S2[status = DECREASE]
+    S1 --> I[User inputs worker code<br>and amount of money]
+    S2 --> I
+    I --> V1{Code exists in DB?}
+    V1 -- "No" --> E1[Show error:<br>code does not exist]
+    E1 --> M
+    V1 -- "Yes" --> V2{Amount > 0?}
+    V2 -- "No" --> E2[Show error:<br>amount must be > 0]
+    E2 --> M
+    V2 -- "Yes" --> V3{Salary after<br>adjustment > 0?}
+    V3 -- "No" --> E3[Show error:<br>adjusted salary must be > 0]
+    E3 --> M
+    V3 -- "Yes" --> A[Update worker salary]
+    A --> H[Save SalaryHistory record<br/>with time and UP/DOWN status]
+    H --> OK[Show success message]
+    OK --> M2[Return to main menu]
+    M2 --> End([End])

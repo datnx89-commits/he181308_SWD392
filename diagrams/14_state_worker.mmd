@@ -1,0 +1,14 @@
+---
+title: "State Machine - Worker Record"
+config:
+  theme: neutral
+---
+stateDiagram-v2
+    [*] --> NotInDB
+    NotInDB --> Registered : addWorker(worker)<br>[valid data]
+    NotInDB --> NotInDB : addWorker rejected<br>[invalid / duplicated]
+    Registered --> Adjusted : changeSalary INCREASE/DECREASE<br>[code exists, amount > 0]
+    Adjusted --> Adjusted : further adjustments<br>(each saved to history)
+    Registered --> Registered : adjustment rejected<br>[invalid amount]
+    Adjusted --> [*] : program ends
+    Registered --> [*] : program ends

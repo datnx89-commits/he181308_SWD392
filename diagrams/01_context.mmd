@@ -1,0 +1,16 @@
+---
+config:
+  theme: neutral
+---
+flowchart LR
+    U(["👤 User<br>(HR Staff)"])
+    S["Worker Management System<br>(J1.S.P0056)"]
+    DB[("Worker Store<br>(in-memory DB)")]
+    H[("Salary History Store<br>(in-memory list)")]
+
+    U -- "worker info, worker code,<br>adjustment amount, menu choice" --> S
+    S -- "menus, prompts, validation errors,<br>adjusted salary report" --> U
+    S -- "add / find / update worker" --> DB
+    DB -- "worker records" --> S
+    S -- "append salary history" --> H
+    H -- "history records (sorted by code)" --> S

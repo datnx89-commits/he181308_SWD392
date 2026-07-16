@@ -1,0 +1,21 @@
+---
+config:
+  theme: neutral
+---
+flowchart TD
+    Start([Start]) --> M[System displays main menu]
+    M --> C{User selects option 1}
+    C --> I[User inputs id, name, age,<br>salary, work location]
+    I --> V1{Code is not null and<br>not duplicated in DB?}
+    V1 -- "No" --> E1[Show error:<br>code null / duplicated]
+    E1 --> M
+    V1 -- "Yes" --> V2{Age in range 18..50?}
+    V2 -- "No" --> E2[Show error:<br>age must be 18-50]
+    E2 --> M
+    V2 -- "Yes" --> V3{Salary > 0?}
+    V3 -- "No" --> E3[Show error:<br>salary must be > 0]
+    E3 --> M
+    V3 -- "Yes" --> A[Add Worker to DB]
+    A --> OK[Show success message]
+    OK --> M2[Return to main menu]
+    M2 --> End([End])
