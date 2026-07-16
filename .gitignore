@@ -1,2 +1,5 @@
 out/
 *.class
+build/
+dist/
+nbproject/private/
