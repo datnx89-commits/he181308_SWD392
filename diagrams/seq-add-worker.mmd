@@ -1,0 +1,44 @@
+---
+title: "Sequence Diagram - Option 1: Add a Worker"
+config:
+  theme: neutral
+---
+sequenceDiagram
+    autonumber
+    actor User
+    participant V as WorkerView
+    participant C as WorkerController
+    participant M as Management
+
+    User->>V: run program
+    V->>User: display menu (1-5)
+    User->>V: select option 1
+    V-->>C: choice = 1
+    C->>V: inputWorker()
+    V->>User: prompt id, name, age, salary, work location
+    User->>V: enter worker information
+    V-->>C: return Worker object
+    C->>M: addWorker(worker)
+    M->>M: validateWorker(worker)
+
+    alt id is null/empty or duplicated in DB
+        M-->>C: throw Exception("Code is null or duplicated")
+        C->>V: displayMessage(error)
+        V->>User: show error message
+    else age not in [18..50]
+        M-->>C: throw Exception("Age must be 18-50")
+        C->>V: displayMessage(error)
+        V->>User: show error message
+    else salary <= 0
+        M-->>C: throw Exception("Salary must be > 0")
+        C->>V: displayMessage(error)
+        V->>User: show error message
+    else data is valid
+        M->>M: workerDB.put(id, worker)
+        M-->>C: return true
+        C->>V: displayMessage("Add worker successfully!")
+        V->>User: show success message
+    end
+
+    C->>V: back to main screen
+    V->>User: display menu (1-5)

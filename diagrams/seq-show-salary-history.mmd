@@ -1,0 +1,27 @@
+---
+title: "Sequence Diagram - Option 4: Show Adjusted Salary Workers"
+config:
+  theme: neutral
+---
+sequenceDiagram
+    autonumber
+    actor User
+    participant V as WorkerView
+    participant C as WorkerController
+    participant M as Management
+
+    User->>V: select option 4
+    V-->>C: choice = 4
+    C->>M: getInfomationSalary()
+    M->>M: sort salaryHistories by worker id
+    M-->>C: return List~SalaryHistory~
+    C->>V: displaySalaryHistories(list)
+
+    alt list is empty
+        V->>User: "No worker has been adjusted salary."
+    else list has data
+        V->>User: show table (code, name, salary before, amount, status UP/DOWN, salary after, time)
+    end
+
+    C->>V: back to main screen
+    V->>User: display menu (1-5)

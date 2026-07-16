@@ -1,0 +1,48 @@
+---
+title: "Sequence Diagram - Option 2 & 3: Increase / Decrease Salary"
+config:
+  theme: neutral
+---
+sequenceDiagram
+    autonumber
+    actor User
+    participant V as WorkerView
+    participant C as WorkerController
+    participant M as Management
+
+    User->>V: select option 2 (increase) or 3 (decrease)
+    V-->>C: choice = 2 | 3
+    C->>C: status = INCREASE | DECREASE
+    C->>V: inputCode()
+    V->>User: prompt worker code (id)
+    User->>V: enter code
+    V-->>C: return code
+    C->>V: inputAmount()
+    V->>User: prompt amount of money
+    User->>V: enter amount
+    V-->>C: return amount
+    C->>M: changeSalary(status, code, amount)
+
+    alt code does not exist in DB
+        M-->>C: throw Exception("Worker code not found")
+        C->>V: displayMessage(error)
+        V->>User: show error message
+    else amount <= 0
+        M-->>C: throw Exception("Amount must be > 0")
+        C->>V: displayMessage(error)
+        V->>User: show error message
+    else data is valid
+        M->>M: salaryBefore = worker.getSalary()
+        alt status == INCREASE
+            M->>M: worker.setSalary(salaryBefore + amount)
+        else status == DECREASE
+            M->>M: worker.setSalary(salaryBefore - amount)
+        end
+        M->>M: salaryHistories.add(new SalaryHistory(...))
+        M-->>C: return true
+        C->>V: displayMessage("Salary adjusted successfully!")
+        V->>User: show success message
+    end
+
+    C->>V: back to main screen
+    V->>User: display menu (1-5)

@@ -1,0 +1,98 @@
+---
+title: "J1.S.P0056 - Worker Management (MVC Pattern)"
+config:
+  theme: neutral
+  class:
+    hideEmptyMembersBox: true
+---
+classDiagram
+direction LR
+
+namespace Model {
+    class Worker {
+        -String id
+        -String name
+        -int age
+        -double salary
+        -String workLocation
+        +Worker(id, name, age, salary, workLocation)
+        +getId() String
+        +getName() String
+        +getAge() int
+        +getSalary() double
+        +setSalary(double) void
+        +getWorkLocation() String
+    }
+
+    class SalaryStatus {
+        <<enumeration>>
+        INCREASE
+        DECREASE
+    }
+
+    class SalaryHistory {
+        -String workerId
+        -String workerName
+        -double salaryBefore
+        -double amount
+        -SalaryStatus status
+        -double salaryAfter
+        -LocalDateTime adjustedAt
+        +getWorkerId() String
+        +getSalaryAfter() double
+        +toString() String
+    }
+
+    class IWorkerManagement {
+        <<interface>>
+        +addWorker(Worker worker) boolean
+        +changeSalary(SalaryStatus status, String code, double amount) boolean
+        +getInfomationSalary() List~SalaryHistory~
+    }
+
+    class Management {
+        -Map~String, Worker~ workerDB
+        -List~SalaryHistory~ salaryHistories
+        +addWorker(Worker worker) boolean
+        +changeSalary(SalaryStatus status, String code, double amount) boolean
+        +getInfomationSalary() List~SalaryHistory~
+        -validateWorker(Worker worker) void
+    }
+}
+
+namespace View {
+    class WorkerView {
+        -Scanner scanner
+        +displayMenu() int
+        +inputWorker() Worker
+        +inputCode() String
+        +inputAmount() double
+        +displaySalaryHistories(List~SalaryHistory~) void
+        +displayMessage(String msg) void
+    }
+}
+
+namespace Controller {
+    class WorkerController {
+        -IWorkerManagement management
+        -WorkerView view
+        +WorkerController(management, view)
+        +run() void
+        -handleAddWorker() void
+        -handleChangeSalary(SalaryStatus status) void
+        -handleShowSalaryInfo() void
+    }
+}
+
+class Main {
+    +main(String[] args) void
+}
+
+Management ..|> IWorkerManagement : implements
+Management "1" o-- "*" Worker : workerDB
+Management "1" o-- "*" SalaryHistory : salaryHistories
+SalaryHistory --> SalaryStatus : status
+WorkerController --> IWorkerManagement : uses (DIP)
+WorkerController --> WorkerView : uses
+WorkerView ..> Worker : creates
+Main ..> WorkerController : creates and runs
