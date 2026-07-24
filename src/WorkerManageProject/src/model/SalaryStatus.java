@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Represents the type of salary adjustment.
+ * Trạng thái điều chỉnh lương: tăng (UP) hoặc giảm (DOWN).
  */
 public enum SalaryStatus {
     INCREASE("UP"),

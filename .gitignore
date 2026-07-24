@@ -3,3 +3,6 @@ out/
 build/
 dist/
 nbproject/private/
+src/WorkerManageProject/build/
+src/WorkerManageProject/dist/
+src/WorkerManageProject/nbproject/private/

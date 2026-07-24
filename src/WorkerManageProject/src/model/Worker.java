@@ -1,16 +1,19 @@
 package model;
 
 /**
- * Entity class representing a Worker.
- * SRP: only holds worker data, no business logic.
+ * Entity class đại diện cho một Worker.
+ * SRP: chỉ chứa dữ liệu, không chứa business logic.
  */
 public class Worker {
 
-    private final String id;
-    private final String name;
-    private final int age;
+    private String id;
+    private String name;
+    private int age;
     private double salary;
-    private final String workLocation;
+    private String workLocation;
+
+    public Worker() {
+    }
 
     public Worker(String id, String name, int age, double salary, String workLocation) {
         this.id = id;
@@ -24,12 +27,24 @@ public class Worker {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public double getSalary() {
@@ -42,5 +57,14 @@ public class Worker {
 
     public String getWorkLocation() {
         return workLocation;
+    }
+
+    public void setWorkLocation(String workLocation) {
+        this.workLocation = workLocation;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + id + "] " + name;
     }
 }

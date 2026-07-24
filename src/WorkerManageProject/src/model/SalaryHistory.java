@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Entity class storing one salary adjustment record of a worker.
- * SRP: only holds salary history data.
+ * Entity lưu một lần điều chỉnh lương của Worker.
+ * SRP: chỉ chứa dữ liệu lịch sử, không chứa business logic.
  */
 public class SalaryHistory {
 
